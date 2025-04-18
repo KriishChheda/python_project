@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>College Committees & Events</title>
+    <link
+      rel="stylesheet"
+      href="{% static 'events/images/categories/styles.css' %}"
+    />
+    <script
+      src="{% static 'events/script.js' %}"
+      defer
+      onload="initializeScripts()"
+    ></script>
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="container header-container">
+        <div class="logo">
+          {% load static %}
+          <script>
+            var defaultLogoPath =
+              "{% static 'events/images/default-logo.png' %}";
+          </script>
+
+          <img
+            class="imageheader"
+            src="{% static 'events/images/categories/logo.png' %}"
+            alt="College Logo"
+            onerror="this.onerror=null; this.src=defaultLogoPath;"
+          />
+          <h1>College Committees & Events Portal</h1>
+        </div>
+        <nav class="main-nav">
+          <button class="mobile-menu-toggle" aria-label="Toggle menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </button>
+          <ul class="nav-links">
+            <li><a href="#committees">Committees</a></li>
+            <li><a href="#categories">Categories</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Discover Campus Life Section -->
+    <section class="hero">
+      <div class="container">
+        <h2>Discover Campus Life</h2>
+        <p>
+          Stay updated with all events happening around the campus and get
+          involved with our student committees and clubs !!
+        </p>
+        <div class="search-container">
+          <input
+            type="text"
+            id="event-search"
+            placeholder="Search for committees and events..."
+          />
+          <button id="search-button">Search</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="committees" class="committees-section">
+      <div class="container">
+        <h2 class="section-title">Our Committees & Clubs</h2>
+        <div class="committees">
+          <!-- Listing all committees, DJs Express first as per requirement -->
+          <div class="committee-card" data-committee="djs-express">
+            <div class="committee-img">
+              <img
+                src="{% static 'events/images/categories/express.png' %}"
+                alt="DJs Express"
+                onerror="this.src='/api/placeholder/600/400'"
+              />
+            </div>
+            <div class="committee-info">
+              <h3>DJs Express</h3>
+              <p>
+                The official public speaking and debating club of the college
+              </p>
+            </div>
+          </div>
+
+          <div class="committee-card" data-committee="nss">
+            <div class="committee-img">
+              <img
+                src="{% static 'events/images/categories/NSS.png' %}"
+                alt="NSS"
+                onerror="this.src='/api/placeholder/600/400'"
+              />
+            </div>
+            <div class="committee-info">
+              <h3>DJS NSS</h3>
+              <p>
+                The official social service scheme of the college. Our aim is to
+                provide hands-on experience to young people in community
+                service.
+              </p>
+            </div>
+          </div>
+
+          <div class="committee-card" data-committee="trinity">
+            <div class="committee-img">
+              <img
+                src="{% static 'events/images/categories/Trinity.png' %}"
+                alt="trinity"
+                onerror="this.src='/api/placeholder/600/400'"
+              />
+            </div>
+            <div class="committee-info">
+              <h3>TRINITY</h3>
+              <p>Our aim is to organise college fests every year.</p>
+            </div>
+          </div>
+
+          <div class="committee-card" data-committee="unicode">
+            <div class="committee-img">
+              <img
+                src="{% static 'events/images/categories/Unicode.png' %}"
+                alt="unicode"
+                onerror="this.src='/api/placeholder/600/400'"
+              />
+            </div>
+            <div class="committee-info">
+              <h3>DJ UNICODE</h3>
+              <p>
+                A club where students code , create and collaborate websites ,
+                apps and much more.
+              </p>
+            </div>
+          </div>
+
+          <div class="committee-card" data-committee="nova">
+            <div class="committee-img">
+              <img
+                src="{% static 'events/images/categories/Nova.png' %}"
+                alt="Nova Student Branch"
+                onerror="this.src='/api/placeholder/600/400'"
+              />
+            </div>
+            <div class="committee-info">
+              <h3>DJS Nova</h3>
+              <p>
+                DJS NOVA is the official Astronomy and Astrophysics club of
+                DJSCE.
+              </p>
+            </div>
+          </div>
+
+          <div class="committee-card" data-committee="acm">
+            <div class="committee-img">
+              <img
+                src="{% static 'events/images/categories/ACM.png' %}"
+                alt="ACM Student Chapter"
+                onerror="this.src='/api/placeholder/600/400'"
+              />
+            </div>
+            <div class="committee-info">
+              <h3>ACM Student Chapter</h3>
+              <p>
+                Advancing computing as a science and profession through
+                educational and scientific computing activities.
+              </p>
+            </div>
+          </div>
+
+          <!-- This here is a Django For loop which will iterate over a variable committees -->
+          {% for committee in committees %}
+          <div class="committee-card" data-committee="{{ committee.id }}">
+            <div class="committee-img">
+              <img
+                src="{% if committee.image %}{{ committee.image.url }}{% else %}{% static 'events/images/default-committee.jpg' %}{% endif %}"
+                alt="{{ committee.name }}"
+                onerror="this.src='/api/placeholder/600/400'"
+              />
+            </div>
+            <div class="committee-info">
+              <h3>{{ committee.name }}</h3>
+              <p>{{ committee.description }}</p>
+            </div>
+          </div>
+
+          {% endfor %}
+          <div
+            class="more-chapters-link"
+            style="text-align: center; margin-top: 30px"
+          >
+            <a
+              href="https://www.djsce.ac.in"
+              target="_blank"
+              class="visit-more-button"
+            >
+              For more student chapters, visit here →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 
+    <section id="categories" class="event-categories">
+      <div class="container">
+        <h2 class="section-title">Event Categories</h2>
+        <div class="dropdown">
+          <button class="dropbtn" id="categoryDropdown">Browse Events ▼</button>
+          <div class="dropdown-content" id="eventDropdown">
+            <a href="#hackathons">Hackathons</a>
+            <a href="#debates">Debates</a>
+            <a href="#muns">MUN's</a>
+            <a href="#ideathons">Ideathons</a>
+            <a href="#treasure-hunts">Treasure Hunts</a>
+            <a href="#dance-competitions">Dance Competitions</a>
+            <a href="#singing-competitions">Singing Competitions</a>
+            <a href="#technical-workshops">Technical Workshops</a>
+            <a href="#cultural-festivals">Cultural Festivals</a>
+            <a href="#more">More</a>
+            {% for category in categories %}
+            <a href="#category-{{ category.id }}">{{ category.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+     -->
+    <section class="upcoming-events-section">
+      <div class="container">
+        <h2 class="section-title">Upcoming College Events</h2>
+        <div class="event-cards-grid">
+          <!-- Hardcoded Sample Events -->
+          <div class="event-card">
+            <img
+              src="{% static 'events/images/categories/LOC.png' %}"
+              alt="Hackathon X"
+            />
+            <div class="event-card-content">
+              <h3>LOC</h3>
+              <p>
+                Join us for an intense 24-hour hackathon organised by ACM
+                student chapter where creativity meets code.
+              </p>
+              <span class="event-date">8th - 9th Feb</span>
+              <span class="event-date"
+                ><a href="#contact" style="color: white">register</a></span
+              >
+            </div>
+          </div>
+
+          <div class="event-card">
+            <img
+              src="{% static 'events/images/categories/CourtCharades.png' %}"
+              alt="Debate Duel"
+            />
+            <div class="event-card-content">
+              <h3>Court Charades</h3>
+              <p>
+                Drumroll, please! 🥁 DJs Express is thrilled to unveil our next
+                big event "COURT CHARADES"🎙️⚖️! Get ready for a powerpacked
+                weekend with heated debates🔥 and high adrenaline💪🏻. Stay tuned
+                for more details!
+              </p>
+              <span class="event-date">6th May, 2025</span>
+              <span class="event-date"
+                ><a href="#contact" style="color: white">register</a></span
+              >
+            </div>
+          </div>
+
+          <div class="event-card">
+            <img
+              src="{% static 'events/images/categories/trinityy.png' %}"
+              alt="Cultural Night"
+            />
+            <div class="event-card-content">
+              <h3>Trinity</h3>
+              <p>
+                An evening filled with performances, fashion shows, and cultural
+                showcases. Pronite on the second and the third day. Artists to
+                be revealed soon !!
+              </p>
+              <span class="event-date">17th -19th march</span>
+              <span class="event-date"
+                ><a href="#contact" style="color: white">register</a></span
+              >
+            </div>
+          </div>
+
+          <div class="event-card">
+            <img
+              src="{% static 'events/images/categories/HackPrep.png' %}"
+              alt="HackPrep"
+            />
+            <div class="event-card-content">
+              <h3>HackPrep</h3>
+              <p>
+                A 2-days event organised by DJ Unicode to teach the freshers the
+                basics of every stack.
+              </p>
+              <span class="event-date">15th - 16th April </span>
+              <span class="event-date"
+                ><a href="#contact" style="color: white">register</a></span
+              >
+            </div>
+          </div>
+
+          <div class="event-card">
+            <img
+              src="{% static 'events/images/categories/E-Summit.png' %}"
+              alt="e-summit"
+            />
+            <div class="event-card-content">
+              <h3>E-Summit</h3>
+              <p>
+                ecell_djsce Waiting to ignite innovation, fuel your
+                entrepreneurial spirit, and network with the best! 🔥 The
+                ultimate entrepreneurial showdown is finally here! 🔥 📢 E-Cell
+                DJSCE is back with E-Summit 2K25 - bigger and better than ever!
+              </p>
+              <span class="event-date">30th March -2nd April</span>
+              <span class="event-date"
+                ><a href="#contact" style="color: white">register</a></span
+              >
+            </div>
+          </div>
+
+          <div class="event-card">
+            <img
+              src="{% static 'events/images/categories/YouthSummit.png' %}"
+              alt="MUN Summit"
+            />
+            <div class="event-card-content">
+              <h3>DJs Youth Summit</h3>
+              <p>
+                djs.munsoc 🌐 Unveiling the DJS Youth Summit – a platform for
+                dialogue, diplomacy, and dynamic discussions! 🤝✨ Join us on
+                this empowering journey as young leaders unite to tackle global
+                challenges and foster meaningful change. 🚀
+              </p>
+              <span class="event-date">May 12, 2025</span>
+              <span class="event-date"
+                ><a href="#contact" style="color: white">register</a></span
+              >
+            </div>
+          </div>
+
+          <!-- Dynamic Event from Django -->
+          {% if upcoming_events %}
+          <div class="event-card">
+            <img
+              src="{% static 'events/images/categories/YouthSummit.png' %}"
+              alt="{{ upcoming_events.0.title }}"
+              onerror="this.src='/static/events/images/default-event.jpg'"
+            />
+            <div class="event-card-content">
+              <h3>{{ upcoming_events.0.title }}</h3>
+              <p>{{ upcoming_events.0.description|truncatewords:20 }}</p>
+              <span class="event-date"
+                ><a href="#contact" style="color: white">register</a></span
+              >
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about-section">
+      <div class="container">
+        <h2 class="section-title">About This Portal</h2>
+        <div class="about-content">
+          <div class="about-text">
+            <p>
+              This is a centralized platform for all college committees and
+              events, maintained by different student organizations. Our mission
+              is to keep students informed about educational, cultural, and
+              recreational activities across campus.
+            </p>
+            <p>
+              Each committee works diligently to bring you diverse experiences
+              that enhance your college journey. Stay connected, get involved,
+              and make the most of your time here!
+            </p>
+          </div>
+          <div class="about-image">
+            <img
+              src="{% static 'events/images/categories/group.png' %}"
+              alt="Campus Life"
+              onerror="this.src='/api/placeholder/600/400'"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+      <div class="container">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="contact-content">
+          <div class="contact-form">
+            <h3>Register for the event</h3>
+            <form id="event-registration-form" method="POST">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+
+              <div class="form-group">
+                <label for="contact">Contact Number</label>
+                <input
+                  type="tel"
+                  id="contact"
+                  name="contact"
+                  pattern="[0-9]{10}"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="college">College Name</label>
+                <input type="text" id="college" name="college" required />
+              </div>
+
+              <div class="form-group">
+                <label for="team">Are you registering as a team?</label>
+                <select id="team" name="team" required>
+                  <option value="" disabled selected>Select one</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+
+              <div class="form-group team-members" style="display: none">
+                <label for="team-members">Team Members (if applicable)</label>
+                <textarea
+                  id="team-members"
+                  name="team_members"
+                  rows="3"
+                  placeholder="Enter names separated by commas"
+                ></textarea>
+              </div>
+
+              <button type="submit" class="submit-btn">Register Now</button>
+            </form>
+          </div>
+          <div class="contact-info">
+            <h3>Contact Information</h3>
+            <div class="info-item">
+              <span class="info-icon">📧</span>
+              <p>committeecoordinator@gmail.com</p>
+            </div>
+            <div class="info-item">
+              <span class="info-icon">📱</span>
+              <p>+91 916716xxxx</p>
+            </div>
+            <div class="info-item">
+              <span class="info-icon">📍</span>
+              <p>Faculty Room 4th floor</p>
+            </div>
+            <div class="committee-contacts">
+              <h4>Committee Contacts</h4>
+              <ul>
+                <li>
+                  <a href="https://express2025-phi.vercel.app">DJs Express</a>
+                </li>
+                <li><a href="https://djstrinity.com">Trinity</a></li>
+                <li><a href="https://djsnova.vercel.app">DJs Nova</a></li>
+                <li><a href="https://gdsc-djsce.netlify.app">GDG Group</a></li>
+                <li><a href="https://djsceecell.com">DJs Ecell</a></li>
+                <li><a href="https://www.djunicode.in">DJ UNICODE</a></li>
+                <li><a href="https://djsnsdc.netlify.app">DJs NSDC</a></li>
+                <li>
+                  <a href="https://www.djsce.ac.in/#">For more details -></a>
+                </li>
+                {% for committee in committees %}
+                <li>{{ committee.name }}: {{ committee.email }}</li>
+                {% empty %} {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="main-footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-logo">
+            <script>
+              var defaultLogoPath =
+                "{% static 'events/images/default-logo.png' %}";
+            </script>
+
+            <img
+              src="{% static 'events/images/categories/logo.png' %}"
+              alt="College Logo"
+              onerror="this.src=defaultLogoPath; this.onerror='';"
+              class="imagefooter"
+              style="height: 100%"
+            />
+          </div>
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#committees">Committees</a></li>
+              <li><a href="#categories">Categories</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-social">
+            <h4>Follow Us</h4>
+            <div class="social-icons">
+              <a href="#" aria-label="Facebook">📘</a>
+              <a href="#" aria-label="Instagram">📸</a>
+              <a href="#" aria-label="Twitter">🐦</a>
+            </div>
+          </div>
+          <div class="footer-newsletter">
+            <h4>Djs NewsLetter</h4>
+            <form id="newsletter-form">
+              {% csrf_token %}
+              <label>DJs Expresso will be mailed to you !!</label>
+              <input type="email" placeholder="Your email address" required />
+              <button type="submit" class="send">Send</button>
+            </form>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; {{ now|date:"Y" }} College Committees & Events Portal. All
+            rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Modal for committee events -->
+    <div id="committeeModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2 id="modalTitle">Committee Events</h2>
+        <div id="modalContent">
+          <!-- Content will be dynamically inserted here -->
+        </div>
+      </div>
+    </div>
+
+    <div id="success-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h3>Success!</h3>
+        <p>Your request has been submitted successfully.</p>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const dropdownBtn = document.getElementById("categoryDropdown");
+        const dropdownContent = document.getElementById("eventDropdown");
+
+        dropdownBtn.addEventListener("click", () => {
+          dropdownContent.classList.toggle("show");
+        });
+
+        // Optional: Hide dropdown when clicking outside
+        window.addEventListener("click", (e) => {
+          if (
+            !dropdownBtn.contains(e.target) &&
+            !dropdownContent.contains(e.target)
+          ) {
+            dropdownContent.classList.remove("show");
+          }
+        });
+      });
+
+      function initializeScripts() {
+        console.log("External scripts loaded successfully");
+        // You could trigger specific functions here if needed
+      }
+
+      // Fallback in case the external script fails to load
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("DOM loaded - initializing inline fallbacks if needed");
+
+        // Add your most critical JS functionality here as a fallback
+        const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
+        const navLinks = document.querySelector(".nav-links");
+
+        if (mobileMenuToggle) {
+          mobileMenuToggle.addEventListener("click", function () {
+            navLinks.classList.toggle("active");
+          });
+        }
+
+        // Add other critical functionality here
+      });
+
+      const Send = document.querySelector(".send");
+      Send.addEventListener("click", () => {});
+    </script>
+  </body>
+</html>
